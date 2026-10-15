@@ -1,0 +1,22 @@
+title: Andrei Niculescu
+description: Engineering leader building organizations around hard technical problems.
+lang: en-US
+url: https://aniculescu.github.io
+baseurl: /resume
+
+author:
+  name: Andrei Niculescu
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+plugins:
+  - jekyll-seo-tag
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor

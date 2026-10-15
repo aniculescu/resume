@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en-US' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% seo %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Oswald:wght@400;500&display=swap">
+  <link rel="stylesheet" href="{{ '/assets/css/resume.css' | relative_url }}">
+</head>
+<body>
+  <main class="resume">
+    {{ content }}
+  </main>
+  <footer class="site-footer">
+    <button type="button" onclick="window.print()">Print / Save as PDF</button>
+    <span>Updated {{ site.time | date: "%B %Y" }}</span>
+  </footer>
+</body>
+</html>
