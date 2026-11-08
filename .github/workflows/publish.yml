@@ -1,0 +1,69 @@
+name: Publish resume
+
+# Every push to main rebuilds the site and its downloads and deploys them to GitHub Pages.
+# Pull requests build the downloads and attach them to the run without deploying.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      # The designed PDF keeps the site's emoji; the runner has no emoji font by default.
+      - name: Install emoji font
+        run: sudo apt-get update && sudo apt-get install -y fonts-noto-color-emoji
+
+      - run: npm ci
+
+      # Uses the Google Chrome that ships on GitHub's Ubuntu runners.
+      - name: Build site and downloads
+        run: npm run build
+        env:
+          JEKYLL_ENV: production
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: resume
+          path: _site/downloads/
+
+      - uses: actions/upload-pages-artifact@v5
+        if: github.ref == 'refs/heads/main'
+        with:
+          path: _site/
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

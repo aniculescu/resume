@@ -14,7 +14,15 @@
     {{ content }}
   </main>
   <footer class="site-footer">
-    <button type="button" onclick="window.print()">Print / Save as PDF</button>
+    {%- comment -%} scripts/generate.mjs writes each format to the path its link points at. {%- endcomment -%}
+    {% assign file = site.author.name | replace: ' ', '-' | prepend: '/downloads/' | append: '-Resume' %}
+    <nav class="downloads" aria-label="Downloads">
+      Download
+      <a href="{{ file | append: '.pdf' | relative_url }}" data-download="pdf">PDF</a>
+      <a href="{{ file | append: '-ATS.pdf' | relative_url }}" data-download="ats-pdf">ATS-friendly PDF</a>
+      <a href="{{ file | append: '-ATS.docx' | relative_url }}" data-download="ats-docx">Word</a>
+      <a href="{{ file | append: '.txt' | relative_url }}" data-download="txt">Plain text</a>
+    </nav>
     <span>Updated {{ site.time | date: "%B %Y" }}</span>
   </footer>
 </body>

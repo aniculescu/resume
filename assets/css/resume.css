@@ -133,20 +133,15 @@ h1, h2, h3 {
   max-width: 960px;
   margin: 0 auto 2rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem 1rem;
   font-size: 0.85rem;
   color: var(--muted);
 }
 
-.site-footer button {
-  font: inherit;
-  padding: 0.4rem 0.9rem;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  background: #fff;
-  cursor: pointer;
-}
+.downloads a { margin-left: 0.6rem; }
 
 /* Small screens */
 
